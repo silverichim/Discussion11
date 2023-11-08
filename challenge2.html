@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS Challenge #2</title>
+      <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+    <main>
+    <h1>JavaScript Challenge #2</h1>
+    <form action="challenge3.html">
+      <fieldset>
+        <legend>Billing Information</legend>
+        <div>
+          <label for="bill">Billing Address:</label><br>
+          <textarea name="billingAdd" id="bill"></textarea>
+        </div>
+
+        <div>
+          <label for="sameAddress">Home Address:</label><br>
+          <input type="checkbox" name="useBilling" id="sameAddress"> Same as above
+          <br>
+          <textarea name="homeAdd" id="home" aria-describedby="sameAddressDesc"></textarea>
+          <p id="sameAddressDesc" class="visually-hidden">If the checkbox is checked, the Home Address field will be populated with the Billing Address and made read-only.</p>
+        </div>
+        <input type="submit" value="Go To Challenge 3">
+      </fieldset>
+    </form>
+    <p class="alert">
+    If you are using the starter code, there is an accessibility error on this page. Fix them!!
+    </p>
+    </main>
+    <script>
+
+
+
+
+
+document.getElementById('sameAddress').addEventListener('change', function() {
+  var billingAddress = document.getElementById('bill').value;
+  var homeAddress = document.getElementById('home');
+
+  if (this.checked) {
+      homeAddress.value = billingAddress;
+      homeAddress.readOnly = true;
+  } else {
+      homeAddress.value = "";
+      homeAddress.readOnly = false;
+  }
+});
+
+// First find all relevant elements
+var sameAddressCheckbox = document.getElementById('sameAddress');
+var billAddressField = document.getElementById('bill');
+var homeAddressField = document.getElementById('home');
+
+// when checkbox changes, update state, and copy over address if needed
+sameAddressCheckbox.addEventListener('change', function() {
+    if (this.checked) {
+        homeAddressField.value = billAddressField.value; // copy over the address
+        homeAddressField.readOnly = true; // make it read only
+    } else {
+        homeAddressField.value = ""; // reset the address
+        homeAddressField.readOnly = false; // make it editable
+    }
+});
+
+// if checkbox is checked and billing address changes, copy it to home address 
+billAddressField.addEventListener('input', function() {
+    if (sameAddressCheckbox.checked) {
+        homeAddressField.value = billAddressField.value;
+    }
+});
+
+
+
+    </script>
+</body>
+</html>
